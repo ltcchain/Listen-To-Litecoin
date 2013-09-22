@@ -113,4 +113,3 @@ var easterSuccess = function() {
 		}
 	}
 }
-new Konami(easterSuccess);

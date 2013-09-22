@@ -72,20 +72,29 @@ var toggleInterface = function() {
 	}
 }
 
-$(window).bind("load", function() {
-	if (DEBUG_MODE) {
-		setInterval(debugSpawner, 100);
-	} else {
-		if ($("#blockchainCheckBox").prop("checked"))
-			TransactionSocket.init();
-		if ($("#mtgoxCheckBox").prop("checked"))
-			TradeSocket.init();
-	}
+$(window).bind("load", function () {
+    if (DEBUG_MODE) {
+        setInterval(debugSpawner, 100);
+    } else {
+        if ($("#blockchainCheckBox").prop("checked"))
+            TransactionSocket.init();
+        if ($("#mtgoxCheckBox").prop("checked"))
+            TradeSocket.init();
+    }
 
-	globalUpdate();
-	
-	Sound.loadup();
-	Sound.init();
+    globalUpdate();
+
+
+    if (Modernizr.audio.ogg || Modernizr.audio.mp3) {
+    
+        Sound.loadup();
+        Sound.init();
+    
+    } else {
+    
+        console.log('No audio support');
+
+    }
 });
 
 var globalUpdate = function() {
@@ -98,6 +107,5 @@ var globalUpdate = function() {
 window.onbeforeunload = function(e) {
 	clearInterval(globalUpdate);
 	TransactionSocket.close();
-	TradeSocket.close();
 };
 
